@@ -1,0 +1,47 @@
+{
+  "name": "frontend-home-assignment",
+  "version": "1.0.0",
+  "description": "Trust-IT frontend home assignment.",
+  "main": "server/index.js",
+  "dependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/plugin-transform-runtime": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.12.13",
+    "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
+    "cors": "^2.8.5",
+    "css-loader": "^5.2.4",
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^5.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.28.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "node server/index.js",
+    "start:client": "cd client && webpack serve --port 3001"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trust-IT-io/frontend-home-assignment.git"
+  },
+  "keywords": [
+    "Trust-IT",
+    "Home",
+    "Assignment",
+    "Frontend"
+  ],
+  "author": "Tom Arad <tom@trust-it.io>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Trust-IT-io/frontend-home-assignment/issues"
+  },
+  "homepage": "https://github.com/Trust-IT-io/frontend-home-assignment#readme"
+}

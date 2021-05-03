@@ -1,13 +1,7 @@
+import { Multiselect } from 'multiselect-react-dropdown';
 import React, { useState } from 'react'
 
-// We should be able to filter by:
-// - PR status (Draft/Open/Closed).
-// - Labels.
-
-// We should be able to sort(asc/desc) by:
-// - PR number.
-// - Title.
-export default function FilterAndSort({ onStatusFilterSelected, onSortByOptionClicked, labels }) {
+export default function FilterAndSort({ onStatusFilterSelected, onSortByOptionClicked, onLabelsFilterSelected, labels }) {
 
   const PRStatusOptions = [
     { value: 'all', displayName: 'All' },
@@ -17,71 +11,71 @@ export default function FilterAndSort({ onStatusFilterSelected, onSortByOptionCl
   ];
 
   const sortByValOptions = [
-    { value: 'prNumber', asc: false },
-    { value: 'title', asc: false },
+    { value: 'prNumber', displayName: 'PR Number', asc: false },
+    { value: 'title', displayName: 'Title', asc: false },
   ];
 
   const [selectedPRStatus, setSelectedPRStatus] = useState(PRStatusOptions[0]);
   const [sortByOptions, setSortByOptions] = useState(sortByValOptions);
-  const [labelInput, setLabelInput] = useState('');
+  const [selectedlabels, setSelectedLabels] = useState([]);
 
   const handleChangeOption = (e) => {
     setSelectedPRStatus(e.target.value)
     onStatusFilterSelected(e.target.value)
   }
 
-  const handleChangeLabelInput = (e) => {
-    setLabelInput(e.target.value)
+  const handleSortByClicked = ({ target }) => {
+    let option = sortByOptions.find(o => o.value === target.value);
+    option.asc = !option.asc;
+    const _updatedSortByOptions = sortByOptions.map(o => o.value === target.value ? option : o)
+    setSortByOptions(_updatedSortByOptions);
+    onSortByOptionClicked(target.value, option.asc)
   }
 
-  const handleSortByClicked = ({ target }) => {
-    const find = sortByOptions.find(o => o.value === target.value);
-    console.log(find);
-    find.asc = !find.asc;
-    const _updatedSortByOptions = sortByOptions.map(o => o.value === target.value ? find : o)
-    console.log(_updatedSortByOptions);
-    setSortByOptions(_updatedSortByOptions);
-    onSortByOptionClicked(target.value, find.asc)
+  const onSelect = (selectedList, selectedItem) => {
+    setSelectedLabels(selectedList)
+    const wantedLabels = selectedList.map(l => l.name);
+    onLabelsFilterSelected(wantedLabels)
+  }
+  const onRemove = (selectedList, removedItem) => {
+    setSelectedLabels(selectedList)
+    const wantedLabels = selectedList.map(l => l.name);
+    onLabelsFilterSelected(wantedLabels)
   }
 
   return (
-    <div>
-      <h4>Filter By</h4>
-      <label>PR status</label>
-      <select id="status" value={selectedPRStatus} onChange={(handleChangeOption)}>
-        {
-          PRStatusOptions.map(o => <option key={o.value} value={o.value}>{o.displayName}</option>)
-        }
-      </select>
-      <label>Labels</label>
-      <input value={labelInput} onChange={handleChangeLabelInput} />
-      <h4>Sort By</h4>
-      {
-        sortByOptions.map(o => <button onClick={handleSortByClicked} key={o.value} value={o.value}> {o.value}({o.asc ? 'asc' : 'desc'})</button>)
-      }
-    </div>
+    <>
+      <div className="space-between" style={{ margin: 'auto 30%' }}>
+        <div style={{ width: '50%' }}>
+          <h5>Filter By</h5>
+          <div >
+            <label>PR status </label>
+            <select id="status" value={selectedPRStatus} onChange={(handleChangeOption)}>
+              {
+                PRStatusOptions.map(o => <option key={o.value} value={o.value}>{o.displayName}</option>)
+              }
+            </select>
+          </div>
+          <div>
+            <label className="center space-before">Labels</label>
+            <Multiselect
+              options={labels}
+              selectedValues={selectedlabels} // Preselected value to persist in dropdown
+              onSelect={onSelect}
+              onRemove={onRemove}
+              displayValue="name"
+            />
+          </div>
+
+        </div>
+        <div >
+          <h5>Sort By</h5>
+          <div className="container-sort">
+            {sortByOptions.map(o => <button className="btn-sort" onClick={handleSortByClicked} key={o.value} value={o.value}>
+              {o.displayName} ({o.asc ? 'desc' : 'asc'})</button>)}
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
-
-
-// import { Multiselect } from 'multiselect-react-dropdown';
-
-// this.state = {
-//     options: [{name: 'Srigar', id: 1},{name: 'Sam', id: 2}]
-// };
-
-// <Multiselect
-// options={this.state.options} // Options to display in the dropdown
-// selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
-// onSelect={this.onSelect} // Function will trigger on select event
-// onRemove={this.onRemove} // Function will trigger on remove event
-// displayValue="name" // Property name to display in the dropdown options
-// />
-
-// onSelect(selectedList, selectedItem) {
-//     ...
-// }
-
-// onRemove(selectedList, removedItem) {
-//     ...
-// }

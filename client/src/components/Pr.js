@@ -3,12 +3,12 @@ import React from 'react'
 export default function Pr({ id, prNumber, title, description, author, status, labels, creationDate }) {
 
   const formatDateTime = (d) => {
-    let date = new Date(d);
-    let day = date.getDate();
-    let month = date.getMonth();
-    let year = date.getFullYear();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
+    const dt = new Date(d);
+    const day = dt.getDate();
+    const month = dt.getMonth() + 1;
+    const year = dt.getFullYear();
+    let hours = dt.getHours();
+    let minutes = dt.getMinutes();
     let ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
@@ -17,6 +17,7 @@ export default function Pr({ id, prNumber, title, description, author, status, l
     return strDateTime;
   }
 
+  // need to handle timezone
   const creationDateFormatted = formatDateTime(creationDate);
 
   return (
@@ -27,7 +28,7 @@ export default function Pr({ id, prNumber, title, description, author, status, l
           <figcaption>{author.name}</figcaption>
         </figure>
         <figure style={{ flexBasis: '70%' }}>
-          <h5 style={{ textAlign: 'left' }} >{title}</h5>
+          <h5 className="txt-align-left">{title}</h5>
           <p>{description}</p>
         </figure>
         <figure>

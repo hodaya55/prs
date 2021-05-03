@@ -35,6 +35,7 @@ function App() {
   }, []);
 
   const processData = (prData) => {
+    let labels = [];
     let prs = prData.map(prObj => {
       let pr = {
         id: prObj.id,
@@ -46,9 +47,13 @@ function App() {
         labels: prObj.labels.map(l => l.name),
         creationDate: prObj.created_at
       }
+      labels.push(...pr.labels);
       return pr;
     })
-    console.log(prs);
+
+    const uniqLabelsNames = [...new Set(labels)].map((l, i) => ({ name: l, id: i }))
+    setUniqLabels(uniqLabelsNames);
+
     return prs;
   }
 
@@ -56,9 +61,9 @@ function App() {
     if (status === 'all') {
       setFilteredData(data)
     } else {
-      let _data = [];
-      _data = data.filter(d => d.status === status)
-      console.log(_data.map(d => d.status));
+      const _data = data.filter(d => d.status === status)
+      // need to merge/ do intersection with filteredData ? or reset status to All
+      // const intersection = filteredData.filter(item1 => _data.some(item2 => item1.id === item2.id))
       setFilteredData(_data)
     }
   }
@@ -78,11 +83,19 @@ function App() {
     setFilteredData(sortedData);
   }
 
+  const handleFilterByLabels = (selectedLabels) => {
+    // matchSubArray
+    const _data = data.filter(d => d.labels.join("").search(selectedLabels.join("")) !== -1)
+    // need to merge/ do intersection with filteredData ? or reset selectedLabels
+    // const intersection = filteredData.filter(item1 => _data.some(item2 => item1.id === item2.id))
+    // setFilteredData(intersection)
+    setFilteredData(_data)
+  }
 
   return (
     <div className="App">
       <FilterAndSort onStatusFilterSelected={handleStatusFilterSelected} onSortByOptionClicked={handleSortByOption}
-        lables={uniqLabels} />
+        onLabelsFilterSelected={handleFilterByLabels} labels={uniqLabels} />
 
       {isLoading ?
         <p>Loading ...</p> :

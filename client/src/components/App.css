@@ -16,13 +16,7 @@
 }
 
 .center {
-  margin: 50px auto;
-}
-
-.container-menu-content {
-  display: inline-flex;
-  justify-content: space-between;
-  width: 100%;
+  margin: auto 5px;
 }
 
 .space-between {
@@ -31,11 +25,18 @@
   padding: 10px 0;
 }
 
-/* .status {
-  background-color: rgb(214, 19, 221);
-  color: white;
-  font-weight: bold;
-} */
+.inline {
+  display: inline-grid;
+}
+
+.container-sort {
+  display: flex;
+  flex-direction: column;
+}
+
+.sort-btn {
+  padding: 0 5x;
+}
 
 .label {
   background-color: rgb(139, 129, 139);

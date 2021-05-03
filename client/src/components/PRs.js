@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Pr from './Pr';
 
 export default function PRs({ data }) {
@@ -7,10 +7,11 @@ export default function PRs({ data }) {
 
   return (
     <ul className="pr-list">
+      <label className="txt-align-left">{data.length} Results</label>
       {
         data.length ?
           data.map((pr, i) => <Pr {...pr} key={i} />) :
-          <p>No PRs found</p>
+          <p style={{ margin: '5px' }}>No Pull Requests Found.</p>
       }
 
     </ul>

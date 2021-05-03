@@ -9,6 +9,7 @@ function App() {
 
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [uniqLabels, setUniqLabels] = useState([]);
   // const [labelsFilter, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const url = 'http://localhost:3000';
@@ -62,27 +63,26 @@ function App() {
     }
   }
 
-  const handleSortByOption = (sortByVal, asc) => {
-    let _data = filteredData;
-    console.log(_data[0].prNumber);
-    console.log(asc);
-    switch (sortByVal) {
+  const handleSortByOption = (val, asc) => {
+    let _data = [...filteredData]
+    switch (val) {
       case 'prNumber':
-        _data = filteredData.sort((d1, d2) => d1.prNumber - d2.prNumber)
+        _data = _data.sort((d1, d2) => d1.prNumber - d2.prNumber)
         break;
       case 'title':
-        _data = filteredData.sort((d1, d2) => (d1.title > d2.title) ? 1 : ((d2.title > d1.title) ? -1 : 0));
+        _data = _data.sort((d1, d2) => (d1.title.toLowerCase() > d2.title.toLowerCase()) ? 1 :
+          ((d2.title.toLowerCase() > d1.title.toLowerCase()) ? -1 : 0));
         break;
     }
     const sortedData = asc ? _data : _data.reverse()
-    console.log(sortedData[0].prNumber);
     setFilteredData(sortedData);
   }
 
 
   return (
     <div className="App">
-      <FilterAndSort onStatusFilterSelected={handleStatusFilterSelected} onSortByOptionClicked={handleSortByOption} />
+      <FilterAndSort onStatusFilterSelected={handleStatusFilterSelected} onSortByOptionClicked={handleSortByOption}
+        lables={uniqLabels} />
 
       {isLoading ?
         <p>Loading ...</p> :

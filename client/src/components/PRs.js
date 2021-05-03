@@ -3,13 +3,13 @@ import Pr from './Pr';
 
 export default function PRs({ data }) {
 
-  console.log(data);
+  console.log(data, '~~~~~~~~~~~~~~~PRS');
 
   return (
     <ul className="pr-list">
       {
         data.length ?
-          data.map(pr => <Pr {...pr} key={pr.id} />) :
+          data.map((pr, i) => <Pr {...pr} key={i} />) :
           <p>No PRs found</p>
       }
 

@@ -20,14 +20,14 @@ export default function Pr({ id, prNumber, title, description, author, status, l
   const creationDateFormatted = formatDateTime(creationDate);
 
   return (
-    <div className="pr-item" key={id}>
+    <div key={id} className="pr-item" >
       <div className='space-between'>
         <figure style={{ flexBasis: '10%' }}>
           <img src={author.urlPic} alt="user picture" className="author-img" />
           <figcaption>{author.name}</figcaption>
         </figure>
-        <figure>
-          <h5 style={{ flexBasis: '70%', textAlign: 'left' }} >{title}</h5>
+        <figure style={{ flexBasis: '70%' }}>
+          <h5 style={{ textAlign: 'left' }} >{title}</h5>
           <p>{description}</p>
         </figure>
         <figure>
@@ -37,8 +37,8 @@ export default function Pr({ id, prNumber, title, description, author, status, l
       </div>
       <div className='space-between'>
         <div>
-          {labels.map(l =>
-            <span className="label" >{l}</span>
+          {labels.map((l, i) =>
+            <span key={i} className="label" >{l}</span>
           )}
         </div>
         <label >Created at {creationDateFormatted}</label>

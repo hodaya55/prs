@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 // We should be able to sort(asc/desc) by:
 // - PR number.
 // - Title.
-export default function FilterAndSort({ onStatusFilterSelected, onSortByOptionClicked }) {
+export default function FilterAndSort({ onStatusFilterSelected, onSortByOptionClicked, labels }) {
 
   const PRStatusOptions = [
     { value: 'all', displayName: 'All' },
@@ -57,8 +57,31 @@ export default function FilterAndSort({ onStatusFilterSelected, onSortByOptionCl
       <input value={labelInput} onChange={handleChangeLabelInput} />
       <h4>Sort By</h4>
       {
-        sortByOptions.map(o => <button onClick={handleSortByClicked} value={o.value}> {o.value}({o.asc ? 'asc' : 'desc'})</button>)
+        sortByOptions.map(o => <button onClick={handleSortByClicked} key={o.value} value={o.value}> {o.value}({o.asc ? 'asc' : 'desc'})</button>)
       }
     </div>
   )
 }
+
+
+// import { Multiselect } from 'multiselect-react-dropdown';
+
+// this.state = {
+//     options: [{name: 'Srigar', id: 1},{name: 'Sam', id: 2}]
+// };
+
+// <Multiselect
+// options={this.state.options} // Options to display in the dropdown
+// selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
+// onSelect={this.onSelect} // Function will trigger on select event
+// onRemove={this.onRemove} // Function will trigger on remove event
+// displayValue="name" // Property name to display in the dropdown options
+// />
+
+// onSelect(selectedList, selectedItem) {
+//     ...
+// }
+
+// onRemove(selectedList, removedItem) {
+//     ...
+// }
